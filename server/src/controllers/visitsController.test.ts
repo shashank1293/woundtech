@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { visitsServiceMock } = vi.hoisted(() => ({
   visitsServiceMock: {
@@ -26,6 +26,12 @@ function createResponse() {
 describe("visitsController", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-03-03T08:00:00.000Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it("parses filters and returns visits with a 200 response", async () => {
