@@ -24,6 +24,7 @@ type CreateVisitFormProps = {
   }) => Promise<unknown>;
 };
 
+// Captures visit details, enforces slot rules, and submits a normalized visit payload.
 export function CreateVisitForm({
   clinicians,
   patients,
@@ -56,6 +57,7 @@ export function CreateVisitForm({
 
   useEffect(() => {
     if (bookedSlots.has(visitTime) || isPastVisitSlot(visitDate, visitTime)) {
+      // Keep the selection valid when the user changes clinician/date and the current slot becomes unusable.
       const nextAvailableSlot = TIME_OPTIONS.find(
         (timeOption) => !bookedSlots.has(timeOption) && !isPastVisitSlot(visitDate, timeOption),
       );
@@ -77,6 +79,7 @@ export function CreateVisitForm({
 
     const normalizedVisitDate = new Date(`${visitDate}T${visitTime}:00`);
 
+    // The backend enforces the same rule, but surfacing it here avoids a round trip for obvious mistakes.
     if (normalizedVisitDate.getMinutes() % 15 !== 0) {
       setError("Visit time must be in 15-minute increments.");
       return;

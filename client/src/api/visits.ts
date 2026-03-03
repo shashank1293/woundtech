@@ -6,6 +6,7 @@ type VisitFilters = {
   patientId?: number;
 };
 
+// Fetches visits with optional clinician and patient filters applied.
 export function getVisits(filters: VisitFilters) {
   const search = new URLSearchParams();
 
@@ -22,6 +23,7 @@ export function getVisits(filters: VisitFilters) {
   return request<Visit[]>(`/visits${query ? `?${query}` : ""}`);
 }
 
+// Creates a new visit from the scheduler form payload.
 export function createVisit(payload: {
   clinicianId: number;
   patientId: number;
@@ -33,4 +35,3 @@ export function createVisit(payload: {
     body: JSON.stringify(payload),
   });
 }
-

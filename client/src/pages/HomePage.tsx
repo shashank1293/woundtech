@@ -10,6 +10,7 @@ import { ResourceList } from "../components/ResourceList";
 import { SectionCard } from "../components/SectionCard";
 import { VisitsTable } from "../components/VisitsTable";
 
+// Coordinates page-level queries, mutations, filters, and the main dashboard layout.
 export function HomePage() {
   const queryClient = useQueryClient();
   const [selectedClinicianId, setSelectedClinicianId] = useState("");
@@ -35,6 +36,7 @@ export function HomePage() {
   });
 
   const visitSlotsQuery = useQuery({
+    // The scheduler needs the unfiltered visit list so booked pills stay accurate even while the table is filtered.
     queryKey: ["visits", "all"],
     queryFn: () => getVisits({}),
   });
@@ -56,6 +58,7 @@ export function HomePage() {
   const createVisitMutation = useMutation({
     mutationFn: createVisit,
     onSuccess: async () => {
+      // Revalidate both the visible timeline and the all-visits cache used by the booking form.
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["visits"] }),
         queryClient.invalidateQueries({ queryKey: ["clinicians"] }),

@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { createClinicianSchema } from "../validation/cliniciansSchemas";
 import { cliniciansService } from "../services/cliniciansService";
 
+// Returns the current clinician list for the frontend.
 export async function listClinicians(_request: Request, response: Response, next: NextFunction) {
   try {
     const clinicians = await cliniciansService.listClinicians();
@@ -13,6 +14,7 @@ export async function listClinicians(_request: Request, response: Response, next
   }
 }
 
+// Validates and creates a new clinician record.
 export async function createClinician(request: Request, response: Response, next: NextFunction) {
   try {
     const payload = createClinicianSchema.parse(request.body);
@@ -23,4 +25,3 @@ export async function createClinician(request: Request, response: Response, next
     next(error);
   }
 }
-

@@ -8,6 +8,7 @@ type CreateEntityFormProps = {
   onSubmit: (payload: { name: string; dateOfBirth?: string }) => Promise<unknown>;
 };
 
+// Reusable form for creating either a clinician or a patient.
 export function CreateEntityForm({
   label,
   dateLabel,
@@ -19,6 +20,7 @@ export function CreateEntityForm({
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  // Validates the input locally and forwards a normalized payload to the caller.
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
@@ -66,4 +68,3 @@ export function CreateEntityForm({
     </form>
   );
 }
-

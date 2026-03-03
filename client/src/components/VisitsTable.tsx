@@ -4,6 +4,7 @@ type VisitsTableProps = {
   visits: Visit[];
 };
 
+// Formats API timestamps into the user's local date and time format.
 function formatVisitDate(value: string) {
   return new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
@@ -11,6 +12,7 @@ function formatVisitDate(value: string) {
   }).format(new Date(value));
 }
 
+// Renders the visit timeline in reverse chronological order.
 export function VisitsTable({ visits }: VisitsTableProps) {
   if (visits.length === 0) {
     return <p className="empty-state">No visits match the current filters.</p>;
@@ -41,4 +43,3 @@ export function VisitsTable({ visits }: VisitsTableProps) {
     </div>
   );
 }
-

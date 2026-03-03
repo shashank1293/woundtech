@@ -9,6 +9,7 @@ export function createApp() {
 
   app.use(
     cors({
+      // The app is local-only for this exercise, so the Vite dev server is the only allowed origin.
       origin: "http://localhost:5173",
     }),
   );
@@ -24,4 +25,3 @@ export function createApp() {
 
   return app;
 }
-

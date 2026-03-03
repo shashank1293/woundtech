@@ -5,6 +5,7 @@ type SectionCardProps = PropsWithChildren<{
   description?: string;
 }>;
 
+// Wraps related UI content in a consistent titled card layout.
 export function SectionCard({ title, description, children }: SectionCardProps) {
   return (
     <section className="card">
@@ -18,4 +19,3 @@ export function SectionCard({ title, description, children }: SectionCardProps) 
     </section>
   );
 }
-

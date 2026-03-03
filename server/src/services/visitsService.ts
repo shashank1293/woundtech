@@ -15,6 +15,7 @@ type CreateVisitInput = {
   notes?: string;
 };
 
+// Loads visits with related clinician and patient names for the table view.
 async function listVisits(filters: ListVisitsInput) {
   return prisma.visit.findMany({
     where: {
@@ -41,7 +42,9 @@ async function listVisits(filters: ListVisitsInput) {
   });
 }
 
+// Creates a visit after verifying the related records exist.
 async function createVisit(data: CreateVisitInput) {
+  // Fail fast with clear 404s before attempting the insert so API callers get actionable errors.
   const [clinician, patient] = await Promise.all([
     prisma.clinician.findUnique({ where: { id: data.clinicianId } }),
     prisma.patient.findUnique({ where: { id: data.patientId } }),
@@ -74,6 +77,7 @@ async function createVisit(data: CreateVisitInput) {
       },
     });
   } catch (error) {
+    // Prisma raises a unique-constraint error when a clinician already has a visit at this exact slot.
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       throw new AppError("This clinician already has a visit booked for that slot", 409);
     }

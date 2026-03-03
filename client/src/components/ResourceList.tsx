@@ -7,6 +7,7 @@ type ResourceListProps = {
   emptyMessage: string;
 };
 
+// Renders a simple list with an empty state fallback.
 export function ResourceList({ items, emptyMessage }: ResourceListProps) {
   if (items.length === 0) {
     return <p className="empty-state">{emptyMessage}</p>;
@@ -23,4 +24,3 @@ export function ResourceList({ items, emptyMessage }: ResourceListProps) {
     </ul>
   );
 }
-
